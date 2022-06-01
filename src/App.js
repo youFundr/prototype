@@ -11,6 +11,7 @@ import "./App.css";
 function App() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
+  const [projects, setProjects] = useState([]);
   const [youfundrContract, setYoufundrContract] = useState(null);
 
   useEffect(
@@ -27,14 +28,14 @@ function App() {
               deadline,
               goal
             ) =>
-              console.log(
+              setProjects((prevState) => [...prevState, {
                 fundAddress,
                 fundStarter,
                 fundName,
                 fundDescription,
                 deadline,
                 goal
-              )
+               }])
           );
         });
       }
@@ -47,8 +48,6 @@ function App() {
       youfundrContract.removeAllListeners("fundStarted");
     }
   );
-
-  const [projects, setProjects] = useState([]);
 
   const handleConnect = async () => {
     try {
