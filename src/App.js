@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ethers } from "ethers";
@@ -31,7 +31,7 @@ const normalizeProjectDetails = ({
 });
 
 function App() {
-  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [fetchProjects, setFetchProjects] = useState(false);
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [projects, setProjects] = useState([]);
@@ -39,11 +39,9 @@ function App() {
 
   useEffect(
     () => {
-      async function handleEffect() {
-        console.log("handling effect");
+      function handleEffect() {
         youfundrContract.on("fundStarted", () => {
-          console.log("fundStarted");
-          forceUpdate();
+          setFetchProjects(true);
         });
       }
       if (youfundrContract) {
@@ -76,47 +74,55 @@ function App() {
 
   useEffect(() => {
     async function handleEffect() {
-      if (youfundrContract && provider) {
-        await youfundrContract.allProjects().then(async (addresses) => {
+      youfundrContract
+        .allProjects()
+        .then(async (addresses) => {
           const projectDetails = await Promise.all(
             addresses.map(async (address) => {
-              const project = new ethers.Contract(
-                address,
-                projectABI,
-                provider
-              );
-              const [
-                projectAddress,
-                fundStarter,
-                fundName,
-                fundDescription,
-                deadline,
-                currentState,
-                currentAmount,
-                goal,
-                donator,
-              ] = await project.details();
+              try {
+                const project = new ethers.Contract(
+                  address,
+                  projectABI,
+                  provider
+                );
+                const [
+                  projectAddress,
+                  fundStarter,
+                  fundName,
+                  fundDescription,
+                  deadline,
+                  currentState,
+                  currentAmount,
+                  goal,
+                  donator,
+                ] = await project.details();
 
-              return normalizeProjectDetails({
-                projectAddress,
-                fundStarter,
-                fundName,
-                fundDescription,
-                deadline,
-                currentState,
-                currentAmount,
-                goal,
-                donator,
-              });
+                return normalizeProjectDetails({
+                  projectAddress,
+                  fundStarter,
+                  fundName,
+                  fundDescription,
+                  deadline,
+                  currentState,
+                  currentAmount,
+                  goal,
+                  donator,
+                });
+              } catch (err) {
+                console.error(err);
+              }
             })
-          );
-          setProjects(projectDetails);
-        });
-      }
-    }
+          ).catch((err) => console.error);
 
-    handleEffect();
-  }, [provider, youfundrContract]);
+          setProjects(projectDetails);
+          setFetchProjects(false);
+        })
+        .catch((err) => console.error);
+    }
+    if (youfundrContract && provider && fetchProjects) {
+      handleEffect();
+    }
+  }, [provider, youfundrContract, fetchProjects]);
 
   return (
     <>
