@@ -1,4 +1,4 @@
-export const youfundrAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+export const youfundrAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
 export const youfundrABI = [
   {
     anonymous: false,
@@ -47,9 +47,9 @@ export const youfundrABI = [
       },
       {
         indexed: false,
-        internalType: "function () view external returns (enum Project.State)",
+        internalType: "enum Project.State",
         name: "state",
-        type: "function",
+        type: "uint8",
       },
       {
         indexed: false,
@@ -60,6 +60,10 @@ export const youfundrABI = [
     ],
     name: "fundStarted",
     type: "event",
+  },
+  {
+    stateMutability: "payable",
+    type: "fallback",
   },
   {
     inputs: [],
@@ -101,6 +105,10 @@ export const youfundrABI = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ];
 export const projectABI = [
