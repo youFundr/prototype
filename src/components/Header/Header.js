@@ -13,15 +13,17 @@ export default function Header({ provider, handleConnect }) {
           </Typography>
         </Link>
         <section style={{ display: "flex", flexWrap: "nowrap" }}>
-          <Link to="/create-project">
-            <ButtonContainer
-              startIcon={
-                <AddIcon sx={{ color: "white", lineHeight: "initial" }} />
-              }
-              text="Project"
-              sx={{ color: "white", lineHeight: "initial" }}
-            ></ButtonContainer>
-          </Link>
+          {provider && (
+            <Link to="/create-project">
+              <ButtonContainer
+                startIcon={
+                  <AddIcon sx={{ color: "white", lineHeight: "initial" }} />
+                }
+                text="Project"
+                sx={{ color: "white", lineHeight: "initial" }}
+              ></ButtonContainer>
+            </Link>
+          )}
           {!provider && (
             <ButtonContainer
               text="Connect"
