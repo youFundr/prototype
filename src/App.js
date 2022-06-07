@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ethers } from "ethers";
@@ -8,7 +8,30 @@ import Header from "./components/Header";
 import FormCreateProject from "./components/FormCreateProject/FormCreateProject";
 import "./App.css";
 
+const normalizeProjectDetails = ({
+  projectAddress,
+  fundStarter,
+  fundName,
+  fundDescription,
+  deadline,
+  currentState,
+  currentAmount,
+  goal,
+  donator,
+}) => ({
+  projectAddress,
+  fundStarter,
+  fundName,
+  fundDescription,
+  deadline: new Date(deadline.toNumber()).toLocaleDateString(),
+  currentState,
+  currentAmount: ethers.utils.formatEther(currentAmount),
+  goal: ethers.utils.formatEther(goal),
+  donator,
+});
+
 function App() {
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [projects, setProjects] = useState([]);
@@ -17,33 +40,17 @@ function App() {
   useEffect(
     () => {
       async function handleEffect() {
-        provider.once("block", () => {
-          youfundrContract.on(
-            "fundStarted",
-            (
-              fundAddress,
-              fundStarter,
-              fundName,
-              fundDescription,
-              deadline,
-              goal
-            ) =>
-              setProjects((prevState) => [...prevState, {
-                fundAddress,
-                fundStarter,
-                fundName,
-                fundDescription,
-                deadline,
-                goal
-               }])
-          );
+        console.log("handling effect");
+        youfundrContract.on("fundStarted", () => {
+          console.log("fundStarted");
+          forceUpdate();
         });
       }
-      if (!!(youfundrContract && provider)) {
+      if (youfundrContract) {
         handleEffect();
       }
     },
-    [youfundrContract, provider],
+    [youfundrContract],
     () => {
       youfundrContract.removeAllListeners("fundStarted");
     }
@@ -62,37 +69,6 @@ function App() {
         signer
       );
       setYoufundrContract(contract);
-      await contract.allProjects().then(async (addresses) => {
-        const projectDetails = await Promise.all(
-          addresses.map(async (address) => {
-            const project = new ethers.Contract(
-              address,
-              projectABI,
-              connection
-            );
-            const [
-              fundStarter,
-              fundName,
-              fundDescription,
-              deadline,
-              currentState,
-              currentAmount,
-              goal,
-            ] = await project.details();
-
-            return {
-              fundStarter,
-              fundName,
-              fundDescription,
-              deadline: new Date(deadline.toNumber()).toLocaleDateString(),
-              currentState,
-              currentAmount: ethers.utils.formatEther(currentAmount),
-              goal: ethers.utils.formatEther(goal),
-            };
-          })
-        );
-        setProjects(projectDetails);
-      });
     } catch (error) {
       console.error(error);
     }
@@ -110,6 +86,7 @@ function App() {
                 provider
               );
               const [
+                projectAddress,
                 fundStarter,
                 fundName,
                 fundDescription,
@@ -117,17 +94,20 @@ function App() {
                 currentState,
                 currentAmount,
                 goal,
+                donator,
               ] = await project.details();
 
-              return {
+              return normalizeProjectDetails({
+                projectAddress,
                 fundStarter,
                 fundName,
                 fundDescription,
-                deadline: new Date(deadline.toNumber()).toLocaleDateString(),
+                deadline,
                 currentState,
-                currentAmount: ethers.utils.formatEther(currentAmount),
-                goal: ethers.utils.formatEther(goal),
-              };
+                currentAmount,
+                goal,
+                donator,
+              });
             })
           );
           setProjects(projectDetails);
@@ -136,7 +116,7 @@ function App() {
     }
 
     handleEffect();
-  }, [projects.length]);
+  }, [provider, youfundrContract]);
 
   return (
     <>

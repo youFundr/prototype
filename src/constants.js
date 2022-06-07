@@ -39,6 +39,24 @@ export const youfundrABI = [
         name: "goal",
         type: "uint256",
       },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "currentAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "function () view external returns (enum Project.State)",
+        name: "state",
+        type: "function",
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "donator",
+        type: "bool",
+      },
     ],
     name: "fundStarted",
     type: "event",
@@ -212,6 +230,11 @@ export const projectABI = [
     name: "details",
     outputs: [
       {
+        internalType: "address",
+        name: "projectAddress",
+        type: "address",
+      },
+      {
         internalType: "address payable",
         name: "fundStarter",
         type: "address",
@@ -245,6 +268,11 @@ export const projectABI = [
         internalType: "uint256",
         name: "goal",
         type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "donator",
+        type: "bool",
       },
     ],
     stateMutability: "view",

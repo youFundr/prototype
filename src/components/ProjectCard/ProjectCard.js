@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardContent, Typography } from "@mui/material";
 
 export default function ProjectCard({
+  projectAddress = "",
   fundName = "",
   fundStarter = "",
   goal = 0,
@@ -8,6 +9,7 @@ export default function ProjectCard({
   fundDescription = "",
   deadline = "",
   currentState = 0,
+  donator = false,
 }) {
   return (
     <Card

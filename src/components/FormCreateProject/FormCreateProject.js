@@ -47,13 +47,10 @@ export default function FormCreateProject({ youfundrContract }) {
       throw Error("Project Name and Description must be provided.");
 
     const parsedGoal = ethers.utils.parseEther(goal);
-
-    await youfundrContract.startFund(
-      name,
-      description,
-      parsedDeadline,
-      parsedGoal
-    );
+    console.log(youfundrContract);
+    await youfundrContract
+      .startFund(name, description, parsedDeadline, parsedGoal)
+      .then((param) => console.log(param));
 
     navigate("/");
   };
