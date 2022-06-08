@@ -1,4 +1,4 @@
-export const youfundrAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+export const youfundrAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
 export const youfundrABI = [
   {
     anonymous: false,
@@ -39,9 +39,31 @@ export const youfundrABI = [
         name: "goal",
         type: "uint256",
       },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "currentAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "enum Project.State",
+        name: "state",
+        type: "uint8",
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "donator",
+        type: "bool",
+      },
     ],
     name: "fundStarted",
     type: "event",
+  },
+  {
+    stateMutability: "payable",
+    type: "fallback",
   },
   {
     inputs: [],
@@ -83,6 +105,10 @@ export const youfundrABI = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ];
 export const projectABI = [
@@ -212,6 +238,11 @@ export const projectABI = [
     name: "details",
     outputs: [
       {
+        internalType: "address",
+        name: "projectAddress",
+        type: "address",
+      },
+      {
         internalType: "address payable",
         name: "fundStarter",
         type: "address",
@@ -245,6 +276,11 @@ export const projectABI = [
         internalType: "uint256",
         name: "goal",
         type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "donator",
+        type: "bool",
       },
     ],
     stateMutability: "view",

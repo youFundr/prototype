@@ -36,26 +36,29 @@ export default function FormCreateProject({ youfundrContract }) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const { name, description, deadline, goal } = formInput;
+    try {
+      event.preventDefault();
+      const { name, description, deadline, goal } = formInput;
 
-    const parsedDeadline = Date.parse(deadline) / 1000;
-    if (Number.isNaN(parsedDeadline))
-      throw Error("Deadline expected to be of type Date.");
+      const parsedDeadline = Date.parse(deadline) / 1000;
+      if (Number.isNaN(parsedDeadline))
+        throw Error("Deadline expected to be of type Date.");
 
-    if (!name || !description)
-      throw Error("Project Name and Description must be provided.");
+      if (!name || !description)
+        throw Error("Project Name and Description must be provided.");
 
-    const parsedGoal = ethers.utils.parseEther(goal);
+      const parsedGoal = ethers.utils.parseEther(goal);
+      await youfundrContract.startFund(
+        name,
+        description,
+        parsedDeadline,
+        parsedGoal
+      );
 
-    await youfundrContract.startFund(
-      name,
-      description,
-      parsedDeadline,
-      parsedGoal
-    );
-
-    navigate("/");
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const theme = createTheme();
