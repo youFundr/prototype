@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import { useContractRead } from "wagmi";
+import { useContractRead, useConnect } from "wagmi";
 import { youfundrABI, youfundrAddress } from "../../constants";
 import ProjectsListItem from "../ProjectsListItem";
 
@@ -9,7 +9,10 @@ export default function ProjectsList() {
       addressOrName: youfundrAddress,
       contractInterface: youfundrABI,
     },
-    "allProjects"
+    "allProjects",
+    {
+      watch: true,
+    }
   );
 
   if (!data || !Array.isArray(data) || !data.length) return;

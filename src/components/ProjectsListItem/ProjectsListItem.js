@@ -10,12 +10,12 @@ import { ethers } from "ethers";
 import { projectABI } from "../../constants";
 
 const transformProjectDetails = ({
-  deadline,
-  currentAmount,
-  goal,
+  deadline = "",
+  currentAmount = "0",
+  goal = "0",
   ...rest
-}) => ({
-  deadline: new Date(deadline.toNumber()).toLocaleDateString(),
+} = {}) => ({
+  deadline: deadline && new Date(deadline.toNumber()).toLocaleDateString(),
   currentAmount: ethers.utils.formatEther(currentAmount),
   goal: ethers.utils.formatEther(goal),
   ...rest,
@@ -31,13 +31,13 @@ export default function ProjectsListItem({ address }) {
   );
 
   const {
-    projectAddress,
-    fundName,
-    fundDescription,
-    deadline,
-    currentState,
-    currentAmount,
-    goal,
+    projectAddress = "",
+    fundName = "",
+    fundDescription = "",
+    deadline = "",
+    currentState = "",
+    currentAmount = "",
+    goal = "",
   } = transformProjectDetails(data);
 
   return (
