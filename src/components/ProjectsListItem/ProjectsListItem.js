@@ -5,6 +5,7 @@ import {
   Container,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { useContractRead } from "wagmi";
 import { ethers } from "ethers";
 import { projectABI } from "../../constants";
@@ -49,16 +50,22 @@ export default function ProjectsListItem({ address }) {
         marginBottom: "25px",
       }}
     >
-      <Card raised>
-        <CardHeader title={fundName} subheader={projectAddress} />
-        <CardContent>
-          <Typography>{goal} ETH</Typography>
-          <Typography>{currentAmount} ETH</Typography>
-          <Typography>{fundDescription}</Typography>
-          <Typography>{deadline}</Typography>
-          <Typography>{currentState}</Typography>
-        </CardContent>
-      </Card>
+      <Container
+        component={Link}
+        to={`/project/${address}`}
+        sx={{ textDecoration: "none" }}
+      >
+        <Card raised>
+          <CardHeader title={fundName} subheader={projectAddress} />
+          <CardContent>
+            <Typography>{goal} ETH</Typography>
+            <Typography>{currentAmount} ETH</Typography>
+            <Typography>{fundDescription}</Typography>
+            <Typography>{deadline}</Typography>
+            <Typography>{currentState}</Typography>
+          </CardContent>
+        </Card>
+      </Container>
     </Container>
   );
 }
