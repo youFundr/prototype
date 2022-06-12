@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import ProjectsList from "./components/ProjectsList";
 import Header from "./components/Header";
 import FormCreateProject from "./components/FormCreateProject/FormCreateProject";
+import Project from "./components/Project";
 import "./App.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ProjectsList />} />
             <Route path="/create-project" element={<FormCreateProject />} />
+            <Route path="/project/:address" element={<Project />} />
           </Routes>
         </main>
       </div>
