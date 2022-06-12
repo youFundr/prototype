@@ -1,9 +1,12 @@
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useConnect } from "wagmi";
 import ButtonContainer from "../ButtonContainer";
 import { Link } from "react-router-dom";
 
-export default function Header({ provider, handleConnect }) {
+export default function Header() {
+  const { activeConnector } = useConnect();
   return (
     <AppBar position="static">
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -13,8 +16,8 @@ export default function Header({ provider, handleConnect }) {
           </Typography>
         </Link>
         <section style={{ display: "flex", flexWrap: "nowrap" }}>
-          {provider && (
-            <Link to="/create-project">
+          {activeConnector && (
+            <Link to="/create-project" style={{ display: "flex" }}>
               <ButtonContainer
                 startIcon={
                   <AddIcon sx={{ color: "white", lineHeight: "initial" }} />
@@ -24,13 +27,7 @@ export default function Header({ provider, handleConnect }) {
               ></ButtonContainer>
             </Link>
           )}
-          {!provider && (
-            <ButtonContainer
-              text="Connect"
-              sx={{ color: "white", display: "flex" }}
-              handleClick={handleConnect}
-            />
-          )}
+          <ConnectButton />
         </section>
       </Toolbar>
     </AppBar>

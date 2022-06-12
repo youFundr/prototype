@@ -13,6 +13,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Box, createTheme } from "@mui/system";
 import { ethers } from "ethers";
+import { useContractWrite } from "wagmi";
+import { youfundrAddress, youfundrABI } from "../../constants";
 
 export default function FormCreateProject({ youfundrContract }) {
   const [formInput, setFormInput] = useState({
@@ -21,6 +23,27 @@ export default function FormCreateProject({ youfundrContract }) {
     deadline: "",
     goal: "",
   });
+  const [payload, setPayload] = useState({
+    name: "",
+    description: "",
+    deadline: "",
+    goal: "",
+  });
+
+  const { data, isError, isLoading, write } = useContractWrite(
+    {
+      addressOrName: youfundrAddress,
+      contractInterface: youfundrABI,
+    },
+    "startFund",
+    {
+      args: [payload.name, payload.description, payload.deadline, payload.goal],
+      onSuccess() {
+        navigate("/");
+      },
+    }
+  );
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -29,33 +52,31 @@ export default function FormCreateProject({ youfundrContract }) {
       const value = target.type === "checkbox" ? target.checked : target.value;
       const name = target.name;
       setFormInput((prev) => ({ ...prev, [name]: value }));
+
+      if (name === "goal") {
+        setPayload((prev) => ({
+          ...prev,
+          [name]: ethers.utils.parseEther(value),
+        }));
+      } else {
+        setPayload((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      }
     } else {
       // DateTimePicker sends value as the top level parameter
       setFormInput((prev) => ({ ...prev, deadline: event }));
+      if (!Number.isNaN(Date.parse(event) / 1000)) {
+        setPayload((prev) => ({ ...prev, deadline: Date.parse(event) / 1000 }));
+      }
     }
   };
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      const { name, description, deadline, goal } = formInput;
-
-      const parsedDeadline = Date.parse(deadline) / 1000;
-      if (Number.isNaN(parsedDeadline))
-        throw Error("Deadline expected to be of type Date.");
-
-      if (!name || !description)
-        throw Error("Project Name and Description must be provided.");
-
-      const parsedGoal = ethers.utils.parseEther(goal);
-      await youfundrContract.startFund(
-        name,
-        description,
-        parsedDeadline,
-        parsedGoal
-      );
-
-      navigate("/");
+      write();
     } catch (err) {
       console.log(err);
     }
