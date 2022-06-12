@@ -1,3 +1,1 @@
-import ProjectsListItem from "./ProjectsListItem";
-
-export default ProjectsListItem;
+export { default } from "./ProjectsListItem";

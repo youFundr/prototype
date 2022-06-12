@@ -1,3 +1,1 @@
-import FormCreateProject from "./FormCreateProject";
-
-export default FormCreateProject;
+export { default } from "./FormCreateProject";
