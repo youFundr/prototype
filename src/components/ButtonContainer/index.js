@@ -1,3 +1,1 @@
-import ButtonContainer from "./ButtonContainer";
-
-export default ButtonContainer;
+export { default } from "./ButtonContainer";
