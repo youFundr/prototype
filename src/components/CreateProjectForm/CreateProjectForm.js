@@ -16,7 +16,7 @@ import { ethers } from "ethers";
 import { useContractWrite } from "wagmi";
 import { youfundrAddress, youfundrABI } from "../../constants";
 
-export default function FormCreateProject({ youfundrContract }) {
+export default function CreateProjectForm({ youfundrContract }) {
   const [formInput, setFormInput] = useState({
     name: "",
     description: "",
