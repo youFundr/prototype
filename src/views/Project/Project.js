@@ -1,9 +1,10 @@
 import Layout from "../../layouts/standard";
+import ProjectDetails from "../../components/ProjectDetails";
 
 export default function Project() {
   return (
     <Layout>
-      <p>Project</p>
+      <ProjectDetails />
     </Layout>
   );
 }

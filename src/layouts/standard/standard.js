@@ -6,7 +6,12 @@ export default function standard({ children }) {
     <>
       <Header />
       <main>
-        <Container maxWidth="xs">{children}</Container>
+        <Container
+          maxWidth="lg"
+          sx={{ marginTop: (theme) => theme.spacing(3) }}
+        >
+          {children}
+        </Container>
       </main>
     </>
   );

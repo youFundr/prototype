@@ -24,7 +24,6 @@ export default function ProjectsList() {
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-around",
-        marginTop: "25px",
       }}
     >
       {data.map((address) => (
