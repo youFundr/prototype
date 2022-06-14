@@ -32,16 +32,14 @@ export default function ProjectsListItem({ address }) {
   return (
     <Container
       component="li"
-      sx={{
-        maxWidth: "345px",
-        width: "345px",
-        marginBottom: "25px",
-      }}
+      sx={{ marginBottom: (theme) => theme.spacing(4) }}
     >
       <Container
         component={Link}
         to={`/project/${address}`}
-        sx={{ textDecoration: "none" }}
+        sx={{
+          textDecoration: "none",
+        }}
       >
         <Card raised>
           <CardHeader title={fundName} subheader={projectAddress} />
