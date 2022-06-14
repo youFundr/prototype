@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
-import Header from "./components/Header";
 import Home from "./views/Home";
 import CreateProject from "./views/CreateProject/";
 import Project from "./views/Project";
