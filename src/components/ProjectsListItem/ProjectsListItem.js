@@ -7,20 +7,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useContractRead } from "wagmi";
-import { ethers } from "ethers";
 import { projectABI } from "../../constants";
-
-const transformProjectDetails = ({
-  deadline = "",
-  currentAmount = "0",
-  goal = "0",
-  ...rest
-} = {}) => ({
-  deadline: deadline && new Date(deadline.toNumber()).toLocaleDateString(),
-  currentAmount: ethers.utils.formatEther(currentAmount),
-  goal: ethers.utils.formatEther(goal),
-  ...rest,
-});
+import { transformProjectDetails } from "../../utils";
 
 export default function ProjectsListItem({ address }) {
   const { data, isError, isLoading } = useContractRead(
