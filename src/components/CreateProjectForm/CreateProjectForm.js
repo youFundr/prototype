@@ -4,17 +4,17 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  TextField,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Box, createTheme } from "@mui/system";
+import { Box } from "@mui/system";
 import { ethers } from "ethers";
 import { useContractWrite } from "wagmi";
 import { youfundrAddress, youfundrABI } from "../../constants";
+import CreateProjectFormTextField from "../CreateProjectFormTextField";
 
 export default function CreateProjectForm({ youfundrContract }) {
   const [formInput, setFormInput] = useState({
@@ -82,85 +82,56 @@ export default function CreateProjectForm({ youfundrContract }) {
     }
   };
 
-  const theme = createTheme();
-  const styles = {
-    createProjectForm: {
-      marginTop: theme.spacing(4),
-      marginBottom: theme.spacing(4),
-      padding: theme.spacing(2),
-    },
-    createProjectForm__content: {
-      display: "flex",
-      flexDirection: "column",
-      padding: theme.spacing(2),
-    },
-    createProjectForm__input: {
-      marginBottom: theme.spacing(2),
-    },
-  };
-
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Container maxWidth="sm">
-        <Box
-          component="form"
-          style={styles.createProjectForm}
-          onSubmit={handleSubmit}
-        >
-          <Card>
-            <CardHeader
-              title="Create New Project"
-              subheader="To get up and running, enter the following information about your new project."
+      <Box component="form" onSubmit={handleSubmit}>
+        <Card raised>
+          <CardHeader
+            title="Create New Project"
+            subheader="To get up and running, enter the following information about your new project."
+          />
+          <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+            <CreateProjectFormTextField
+              name="name"
+              id="project-name"
+              label="Project Name"
+              value={formInput.name}
+              onChange={handleChange}
+              required
             />
-            <CardContent style={styles.createProjectForm__content}>
-              <TextField
-                name="name"
-                id="project-name"
-                label="Project Name"
-                value={formInput.name}
-                onChange={handleChange}
-                style={styles.createProjectForm__input}
-                required
-              />
-              <TextField
-                name="description"
-                id="project-description"
-                label="Description"
-                value={formInput.description}
-                onChange={handleChange}
-                style={styles.createProjectForm__input}
-                required
-              />
-              <DateTimePicker
-                name="deadline"
-                label="Funding Deadline"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    style={styles.createProjectForm__input}
-                  />
-                )}
-                value={formInput.deadline}
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                name="goal"
-                id="project-goal"
-                label="Goal Amount"
-                value={formInput.goal}
-                onChange={handleChange}
-                style={styles.createProjectForm__input}
-                required
-              />
-            </CardContent>
-            <CardActions>
-              <Button color="error">Cancel</Button>
-              <Button type="submit">Create</Button>
-            </CardActions>
-          </Card>
-        </Box>
-      </Container>
+            <CreateProjectFormTextField
+              name="description"
+              id="project-description"
+              label="Description"
+              value={formInput.description}
+              onChange={handleChange}
+              required
+            />
+            <DateTimePicker
+              name="deadline"
+              label="Funding Deadline"
+              renderInput={(params) => (
+                <CreateProjectFormTextField {...params} />
+              )}
+              value={formInput.deadline}
+              onChange={handleChange}
+              required
+            />
+            <CreateProjectFormTextField
+              name="goal"
+              id="project-goal"
+              label="Goal Amount"
+              value={formInput.goal}
+              onChange={handleChange}
+              required
+            />
+          </CardContent>
+          <CardActions>
+            <Button color="error">Cancel</Button>
+            <Button type="submit">Create</Button>
+          </CardActions>
+        </Card>
+      </Box>
     </LocalizationProvider>
   );
 }
