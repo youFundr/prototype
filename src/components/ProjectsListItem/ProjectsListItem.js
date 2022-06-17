@@ -18,7 +18,6 @@ export default function ProjectsListItem({ address }) {
     },
     "details"
   );
-
   const {
     projectAddress = "",
     fundName = "",
