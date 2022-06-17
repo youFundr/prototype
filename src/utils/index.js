@@ -5,9 +5,10 @@ export function transformProjectDetails({
   currentAmount = "0",
   goal = "0",
   ...rest
-}) {
+} = {}) {
   return {
-    deadline: deadline && new Date(deadline.toNumber()).toLocaleDateString(),
+    deadline:
+      deadline && new Date(deadline.toNumber() * 1000).toLocaleDateString(),
     currentAmount: ethers.utils.formatEther(currentAmount),
     goal: ethers.utils.formatEther(goal),
     ...rest,
