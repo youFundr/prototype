@@ -141,6 +141,7 @@ function App() {
                 <FormCreateProject youfundrContract={youfundrContract} />
               }
             />
+            <Route path="/documentation" element={null} />
           </Routes>
         </main>
       </div>
