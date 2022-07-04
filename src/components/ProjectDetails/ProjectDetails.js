@@ -2,14 +2,9 @@ import { useContractRead } from "wagmi";
 import { useParams } from "react-router-dom";
 import { projectABI } from "../../constants";
 import { transformProjectDetails } from "../../utils";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
-import ProjectDetailsDivider from "../ProjectDetailsDivider/ProjectDetailsDivider";
+import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
+import ProjectDetailsDivider from "../ProjectDetailsDivider";
+import ProjectDetailsHeader from "../ProjectDetailsHeader";
 
 export default function ProjectDetails() {
   const { address } = useParams();
@@ -37,7 +32,7 @@ export default function ProjectDetails() {
 
   return (
     <Card>
-      <CardHeader
+      <ProjectDetailsHeader
         title={fundName}
         subheader={`Started By: ${fundStarter}`}
         subheaderTypographyProps={{ sx: { wordBreak: "break-all" } }}
