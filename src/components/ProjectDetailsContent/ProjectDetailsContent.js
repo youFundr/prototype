@@ -27,7 +27,7 @@ export default function ProjectDetailsContent({
             variant="determinate"
             value={
               Number(currentAmount)
-                ? (goal / currentAmount) * 100
+                ? (currentAmount / goal) * 100
                 : Number(currentAmount)
             }
           />

@@ -2,10 +2,10 @@ import { useContractRead } from "wagmi";
 import { useParams } from "react-router-dom";
 import { projectABI } from "../../constants";
 import { transformProjectDetails } from "../../utils";
-import { Card, CardContent, LinearProgress, Typography } from "@mui/material";
-import ProjectDetailsDivider from "../ProjectDetailsDivider";
+import { Card } from "@mui/material";
 import ProjectDetailsHeader from "../ProjectDetailsHeader";
 import ProjectDetailsContent from "../ProjectDetailsContent";
+import ProjectDetailsFooter from "../ProjectDetailsFooter";
 
 export default function ProjectDetails() {
   const { address } = useParams();
@@ -41,28 +41,9 @@ export default function ProjectDetails() {
       <ProjectDetailsContent
         {...{ projectAddress, goal, currentAmount, fundDescription }}
       />
-      {deadline && (
-        <Typography
-          sx={{
-            textAlign: "right",
-            fontStyle: "italic",
-            color: (theme) => theme.palette.info.main,
-          }}
-        >
-          Deadline: {deadline}
-        </Typography>
-      )}
-      {(currentState || currentState === 0) && (
-        <Typography
-          sx={{
-            textAlign: "right",
-            fontStyle: "italic",
-            color: (theme) => theme.palette.info.main,
-          }}
-        >
-          Status: {currentState}
-        </Typography>
-      )}
+      <ProjectDetailsFooter
+        {...{ deadline, currentState, address, projectABI }}
+      />
     </Card>
   );
 }

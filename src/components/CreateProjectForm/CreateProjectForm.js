@@ -73,13 +73,17 @@ export default function CreateProjectForm({ youfundrContract }) {
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     try {
       event.preventDefault();
       write();
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleCancel = () => {
+    navigate("/");
   };
 
   return (
@@ -127,7 +131,9 @@ export default function CreateProjectForm({ youfundrContract }) {
             />
           </CardContent>
           <CardActions>
-            <Button color="error">Cancel</Button>
+            <Button onClick={handleCancel} color="error">
+              Cancel
+            </Button>
             <Button type="submit">Create</Button>
           </CardActions>
         </Card>
