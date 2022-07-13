@@ -42,7 +42,7 @@ export default function ProjectDetails() {
         {...{ projectAddress, goal, currentAmount, fundDescription }}
       />
       <ProjectDetailsFooter
-        {...{ deadline, currentState, address, projectABI }}
+        {...{ deadline, currentState, address, projectABI, fundStarter }}
       />
     </Card>
   );

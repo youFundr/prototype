@@ -2,14 +2,22 @@ import { useState } from "react";
 import { Box, Button, CardActions, Collapse } from "@mui/material";
 import ProjectDetailsFooterText from "../ProjectDetailsFooterText";
 import FundForm from "../FundForm";
+import { useAccount } from "wagmi";
 
 export default function ProjectDetailsFooter({
   deadline,
   currentState,
   address,
   projectABI,
+  fundStarter,
 }) {
   const [expanded, setExpanded] = useState(false);
+
+  const {
+    data: { address: userAddress } = {},
+    isError,
+    isLoading,
+  } = useAccount();
 
   const toggleFundForm = () => setExpanded(!expanded);
   return (
@@ -25,12 +33,14 @@ export default function ProjectDetailsFooter({
           sx={{ justifyContent: { xs: "center", sm: "flex-start" } }}
           onClick={toggleFundForm}
         >
-          <Button
-            sx={{ display: expanded ? "none" : "flex" }}
-            variant="contained"
-          >
-            Fund
-          </Button>
+          {userAddress && userAddress !== fundStarter && (
+            <Button
+              sx={{ display: expanded ? "none" : "flex" }}
+              variant="contained"
+            >
+              Fund
+            </Button>
+          )}
         </CardActions>
         <Box sx={{ padding: 1 }}>
           {deadline && (
@@ -41,13 +51,15 @@ export default function ProjectDetailsFooter({
           )}
         </Box>
       </Box>
-      <Collapse in={expanded}>
-        <FundForm
-          toggleForm={toggleFundForm}
-          address={address}
-          projectABI={projectABI}
-        />
-      </Collapse>
+      {userAddress && userAddress !== fundStarter && (
+        <Collapse in={expanded}>
+          <FundForm
+            toggleForm={toggleFundForm}
+            address={address}
+            projectABI={projectABI}
+          />
+        </Collapse>
+      )}
     </Box>
   );
 }
