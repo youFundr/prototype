@@ -1,7 +1,8 @@
 import { Container } from "@mui/system";
-import { useContractRead, useConnect } from "wagmi";
+import { useContractRead } from "wagmi";
 import { youfundrABI, youfundrAddress } from "../../constants";
 import ProjectsListItem from "../ProjectsListItem";
+import ProjectsNotFound from "../ProjectsNotFound";
 
 export default function ProjectsList() {
   const { data, isError, isLoading } = useContractRead(
@@ -15,7 +16,9 @@ export default function ProjectsList() {
     }
   );
 
-  if (!data || !Array.isArray(data) || !data.length) return;
+  if (!data || !Array.isArray(data) || !data.length) {
+    return <ProjectsNotFound />;
+  }
 
   return (
     <Container
