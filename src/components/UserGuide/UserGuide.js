@@ -17,8 +17,9 @@ export default function AlternateTimeline() {
 
 
   return (
-    <div>
-      <h1>User Guide</h1>
+    <div id='users'>
+      <h1 id='guide'>User Guide</h1>
+      <div id='creators'>
       <Timeline position="alternate">
       <h2>For creators: </h2>
       <TimelineItem>
@@ -48,27 +49,32 @@ export default function AlternateTimeline() {
         </TimelineSeparator>
         <TimelineContent id='content'>Repeat</TimelineContent>
       </TimelineItem>
-      <h2>For Investors: </h2>
+     
+    </Timeline>
+    </div>
+      <div id='creators'>
+      <Timeline position="alternate">
+      <h2>For creators: </h2>
       <TimelineItem>
         <TimelineSeparator>
           <TimelineDot />
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent id='content'>Find your favorite project</TimelineContent>
+        <TimelineContent id='content'>Connect to metamask</TimelineContent>
+      </TimelineItem>
+      <TimelineItem id='content'>
+        <TimelineSeparator>
+          <TimelineDot />
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent id='content' >Enter your project details</TimelineContent>
       </TimelineItem>
       <TimelineItem>
         <TimelineSeparator>
           <TimelineDot />
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent id='content'>Read the details</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent id='content'>Hit fund</TimelineContent>
+        <TimelineContent id='content'>Hit send</TimelineContent>
       </TimelineItem>
       <TimelineItem>
         <TimelineSeparator>
@@ -76,7 +82,9 @@ export default function AlternateTimeline() {
         </TimelineSeparator>
         <TimelineContent id='content'>Repeat</TimelineContent>
       </TimelineItem>
+     
     </Timeline>
+    </div>
     </div>
     
   );

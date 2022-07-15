@@ -1,14 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Righteous&family=Russo+One&display=swap');
 
-h1{
+#guide{
     text-align: center;
     color: #2E8B57;
     font-family: 'Righteous', cursive;
+    margin-bottom: 40px;
+}
+
+#creators{
+    background-color: #2E8B57;
+    width: 80vw;
+    max-width: 37.5em;
+    padding: 3em 2.5em;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 60%;
+    left: 50%;
+    border-radius: 0.62em;
+    box-shadow: 0 1.25em 1.8em rgba(8, 21, 65, 0.25);
 }
 
 h2{
     text-align: center;
-    color: #008000;
+    color: white;
     font-family: 'Righteous', cursive;
     margin-top: 50px;
 }
@@ -18,7 +32,7 @@ body{
 }
 
 #content{
- color: #7CFC00;
+ color: white;
  font-weight: bold;
  font-family: 'Fredoka One', cursive;
  font-size: 22px;
