@@ -5,6 +5,7 @@ import CreateProject from "./views/CreateProject/";
 import Project from "./views/Project";
 import "./App.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import Documentation from './views/Documentation'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/create-project" element={<CreateProject />} />
           <Route path="/project/:address" element={<Project />} />
+          <Route path="/documentation" element={<Documentation />} />
         </Routes>
       </div>
     </>
