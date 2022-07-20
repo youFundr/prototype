@@ -17,11 +17,12 @@ export default function AlternateTimeline() {
 
 
   return (
-    <div id='users'>
-      <h1 id='guide'>User Guide</h1>
-      <div id='creators'>
+    <div> 
+    <h1 className='user-header'>User Guide</h1>
+    <div className ='users'>
+      <div className ='creators'>
       <Timeline position="alternate">
-      <h2>For creators: </h2>
+      <h2 className='creators-header'>For creators</h2>
       <TimelineItem>
         <TimelineSeparator>
           <TimelineDot />
@@ -49,43 +50,46 @@ export default function AlternateTimeline() {
         </TimelineSeparator>
         <TimelineContent id='content'>Repeat</TimelineContent>
       </TimelineItem>
-     
-    </Timeline>
-    </div>
-      <div id='creators'>
-      <Timeline position="alternate">
-      <h2>For creators: </h2>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent id='content'>Connect to metamask</TimelineContent>
-      </TimelineItem>
-      <TimelineItem id='content'>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent id='content' >Enter your project details</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent id='content'>Hit send</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot />
-        </TimelineSeparator>
-        <TimelineContent id='content'>Repeat</TimelineContent>
-      </TimelineItem>
-     
+  
     </Timeline>
     </div>
     </div>
     
+    <div className ='users'>
+      <div className ='creators'>
+      <Timeline position="alternate">
+      <h2 className='creators-header'>For investors</h2>
+      <TimelineItem>
+        <TimelineSeparator>
+          <TimelineDot />
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent id='content'>Find a project</TimelineContent>
+      </TimelineItem>
+      <TimelineItem id='content'>
+        <TimelineSeparator>
+          <TimelineDot />
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent id='content' >Read project details</TimelineContent>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineSeparator>
+          <TimelineDot />
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent id='content'>Hit fund button</TimelineContent>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineSeparator>
+          <TimelineDot />
+        </TimelineSeparator>
+        <TimelineContent id='content'>Repeat</TimelineContent>
+      </TimelineItem>
+  
+    </Timeline>
+    </div>
+    </div>
+    </div>
   );
 }
