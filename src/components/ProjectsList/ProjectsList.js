@@ -1,7 +1,9 @@
+import { CircularProgress } from "@mui/material";
 import { Container } from "@mui/system";
-import { useContractRead, useConnect } from "wagmi";
+import { useContractRead } from "wagmi";
 import { youfundrABI, youfundrAddress } from "../../constants";
 import ProjectsListItem from "../ProjectsListItem";
+import ProjectsNotFound from "../ProjectsNotFound";
 
 export default function ProjectsList() {
   const { data, isError, isLoading } = useContractRead(
@@ -15,8 +17,6 @@ export default function ProjectsList() {
     }
   );
 
-  if (!data || !Array.isArray(data) || !data.length) return;
-
   return (
     <Container
       component="ul"
@@ -26,9 +26,15 @@ export default function ProjectsList() {
         justifyContent: "space-around",
       }}
     >
-      {data.map((address) => (
-        <ProjectsListItem key={address} address={address} />
-      ))}
+      {isLoading && <CircularProgress />}
+      {/* TODO: add error handling  */}
+      {!data || !Array.isArray(data) || !data.length ? (
+        <ProjectsNotFound />
+      ) : (
+        data.map((address) => (
+          <ProjectsListItem key={address} address={address} />
+        ))
+      )}
     </Container>
   );
 }
