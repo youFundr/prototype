@@ -15,6 +15,7 @@ import { ethers } from "ethers";
 import { useContractWrite } from "wagmi";
 import { youfundrAddress, youfundrABI } from "../../constants";
 import CreateProjectFormTextField from "../CreateProjectFormTextField";
+import CollapsableAlert from "../CollapsableAlert";
 
 export default function CreateProjectForm({ youfundrContract }) {
   const [formInput, setFormInput] = useState({
@@ -29,6 +30,8 @@ export default function CreateProjectForm({ youfundrContract }) {
     deadline: "",
     goal: "",
   });
+  const [submitError, setSubmitError] = useState(false);
+  const [submitErrorMessage, setSumbitErrorMessage] = useState("");
 
   const { data, isError, isLoading, write } = useContractWrite(
     {
@@ -40,6 +43,10 @@ export default function CreateProjectForm({ youfundrContract }) {
       args: [payload.name, payload.description, payload.deadline, payload.goal],
       onSuccess() {
         navigate("/");
+      },
+      onError(error) {
+        setSubmitError(true);
+        setSumbitErrorMessage((error && error.message) || "");
       },
     }
   );
@@ -86,9 +93,21 @@ export default function CreateProjectForm({ youfundrContract }) {
     navigate("/");
   };
 
+  const handleAlertClose = () => {
+    setSubmitError(false);
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Box component="form" onSubmit={handleSubmit}>
+        {isError && (
+          <CollapsableAlert
+            severity="error"
+            open={submitError}
+            handleClose={handleAlertClose}
+            text={submitErrorMessage}
+          />
+        )}
         <Card raised>
           <CardHeader
             title="Create New Project"

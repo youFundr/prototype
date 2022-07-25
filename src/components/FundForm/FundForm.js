@@ -13,6 +13,7 @@ import { ethers } from "ethers";
 import { useContractWrite } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
+import CollapsableAlert from "../CollapsableAlert";
 
 export default function FundForm({ toggleForm, address, projectABI }) {
   const [formInput, setFormInput] = useState({
@@ -98,6 +99,8 @@ export default function FundForm({ toggleForm, address, projectABI }) {
     }
   };
 
+  const handleAlertClose = () => setAlertOpen(false);
+
   return (
     <Box
       component="form"
@@ -142,6 +145,12 @@ export default function FundForm({ toggleForm, address, projectABI }) {
           Confirm
         </Button>
       </Box>
+      <CollapsableAlert
+        severity="error"
+        open={alertOpen}
+        handleClose={handleAlertClose}
+        text={errorText}
+      />
       <Collapse in={alertOpen}>
         <Alert
           severity="error"
